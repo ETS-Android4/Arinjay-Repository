@@ -9,20 +9,32 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class ArinjayDrivetrain extends LinearOpMode {
     //declare motors
-    DcMotor leftMotor;
-    DcMotor rightMotor;
+    public DcMotor backLeft = null;
+    public DcMotor frontLeft = null;
+    public DcMotor backRight = null;
+    public DcMotor frontRight = null;
+    public double turn = 0;
+    public double horizontal = 0;
+    public double vertical = 0;
 //test
     public void runOpMode() {
         //initialize motors
-        leftMotor = hardwareMap.get(DcMotor.class, "leftMotor");
-        rightMotor = hardwareMap.get(DcMotor.class, "rightMotor");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
         waitForStart();
 
         //set motors to controller input
         while(opModeIsActive()) {
-            leftMotor.setPower(gamepad1.left_stick_y);
-            rightMotor.setPower(-1*gamepad1.right_stick_y);
+            horizontal = gamepad1.left_stick_x;
+            vertical = gamepad1.left_stick_y;
+            turn = gamepad1.right_stick_x;
+            backLeft.setPower(vertical + turn - horizontal);
+            frontLeft.setPower(vertical + turn + horizontal);
+            backRight.setPower(vertical - turn + horizontal);
+            frontRight.setPower(vertical - turn - horizontal);
         }
     }
 }
