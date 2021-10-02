@@ -60,7 +60,7 @@ public class ArinjayAuton extends LinearOpMode {
 
 
 
-    public double move(int dir, double dist, int pos) { //dir{for,back,right,left}
+    public double move(int dir, double dist) { //dir{for,back,right,left}
         int ticks = (int)(dist*ticksPerRevolution/circumference);
         if(dir == direction[0]) {
             forward(ticks);
@@ -79,7 +79,7 @@ public class ArinjayAuton extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (true) {
-            if(frontLeft.isBusy()==false||frontRight.isBusy()==false||backLeft.isBusy()==false||backRight.isBusy()==false){
+            if(frontLeft.isBusy()==false&&frontRight.isBusy()==false&&backLeft.isBusy()==false&&backRight.isBusy()==false){
                 //isbusy is self explanatory boolean function
                 setAllPower(0);
                 return dist;
