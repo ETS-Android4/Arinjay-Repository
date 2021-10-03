@@ -113,7 +113,18 @@ public class ArinjayAuton extends LinearOpMode {
             }
         }
     }
-
+    public double rotate(int dir,int magnitude) { //rotates on center point because the other points seem niche and I'm lazy
+        int ticks = (int)(magnitude*ticksPerRevolution/circumference);//multiply this by a constant
+        //constant dependent on how far wheels are apart:further apart wheels rotate slower
+        //either do math or do trial and error
+        if(dir == -1) {
+            ticks*=-1; //clockwise being positive is weird, but the whole thing is like that so...
+        }
+        frontLeft.setTargetPosition(ticks);
+        backLeft.setTargetPosition(ticks);
+        frontRight.setTargetPosition(ticks*-1);
+        backRight.setTargetPosition(ticks*-1);
+    }
 
     public void runOpMode() {
         //initialize motors
@@ -125,7 +136,16 @@ public class ArinjayAuton extends LinearOpMode {
         waitForStart();
 
         //set motors to controller input
-        //something like move(<dir>,<dist>)
-        //dir{0,90,180,270,45,135,225,315} OR use negative angles for left
+        /*
+        something like move(<dir>,<dist>)
+        dir{0,90,180,270,45,135,225,315} OR use negative angles for left
+        */
+
+        /*
+        something like(<dir>,<magnitude>)
+        dir = 1 implies right, dir = -1 implies left
+        rotation magnitude to go backwards the long way if necessary
+         */
+
     }
 }
