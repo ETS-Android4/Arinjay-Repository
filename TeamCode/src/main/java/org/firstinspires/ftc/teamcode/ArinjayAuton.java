@@ -121,7 +121,7 @@ public class ArinjayAuton extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         while (true) {
-            if(frontLeft.isBusy()==false&&frontRight.isBusy()==false&&backLeft.isBusy()==false&&backRight.isBusy()==false){
+            if(!frontLeft.isBusy()&&!frontRight.isBusy()&&!backLeft.isBusy()&&!backRight.isBusy()){
                 //isbusy is self explanatory boolean function
                 setAllPower(0);
                 return dist;
