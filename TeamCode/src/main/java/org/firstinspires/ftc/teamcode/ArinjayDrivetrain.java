@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.*;
 
 public class ArinjayDrivetrain extends LinearOpMode {
     //declare motors
-
     public DcMotor backLeft = null;
     public DcMotor frontLeft = null;
     public DcMotor backRight = null;
@@ -45,8 +44,10 @@ public class ArinjayDrivetrain extends LinearOpMode {
             double turn = gamepad1.right_stick_x;
             backLeft.setPower(vertical + turn - horizontal);
             frontLeft.setPower(vertical + turn + horizontal);
-            backRight.setPower(vertical - turn + horizontal);
+            backRight.setPower(-vertical + turn - horizontal);
             frontRight.setPower(vertical - turn - horizontal);
+
+            /*
             if(gamepad1.dpad_down){
                 if(liftMotor.getCurrentPosition()>0){
                     liftMotor.setPower(-1);
@@ -95,6 +96,8 @@ public class ArinjayDrivetrain extends LinearOpMode {
             else if(gamepad1.b){
                 carouselServo.setPower(-1);
             }
+            */
+
         }
     }
 }
