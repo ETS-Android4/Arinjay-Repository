@@ -32,25 +32,25 @@ public class RobotHardware { // the hardware map
         hwMap = ahwMap;
 
         // front left motor
-        frontLeft = hwMap.get(DcMotor.class, "frontLeft");  // initialize the motor
+        frontLeft = hwMap.get(DcMotor.class, "leftFrontMotor");  // initialize the motor
         frontLeft.setDirection(DcMotorSimple.Direction.FORWARD);  // set as forward
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);  // do not use encoders for this
         frontLeft.setPower(0.0);  // initialize to no power
 
         // front right motor
-        frontRight = hwMap.get(DcMotor.class, "frontRight");
+        frontRight = hwMap.get(DcMotor.class, "rightFrontMotor");
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setPower(0.0);
 
         // back left motor
-        backLeft = hwMap.get(DcMotor.class, "backLeft");
+        backLeft = hwMap.get(DcMotor.class, "leftBackMotor");
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setPower(0.0);
 
         // back right motor
-        backRight = hwMap.get(DcMotor.class, "backRight");
+        backRight = hwMap.get(DcMotor.class, "rightBackMotor");
         backRight.setDirection(DcMotorSimple.Direction.FORWARD);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setPower(0.0);
