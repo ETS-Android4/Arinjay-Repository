@@ -18,7 +18,7 @@ public class ArinjayAuton extends LinearOpMode {
     public double turn = 0;
     public double horizontal = 0;
     public double vertical = 0;
-    static final double wheelDiameter = 3;
+    static final double wheelDiameter = 3.7796;
     static final double ticksPerRevolution = 537.6;
     double circumference = Math.PI * wheelDiameter;
     public int direction[] = {0,90,180,270,45,315,225,135};
@@ -116,10 +116,7 @@ public class ArinjayAuton extends LinearOpMode {
         else if((dir+360)%360 == direction[7]) {
             dirBR(ticks);
         }
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         while (true) {
             if(!frontLeft.isBusy()&&!frontRight.isBusy()&&!backLeft.isBusy()&&!backRight.isBusy()){
                 //isbusy is self explanatory boolean function
@@ -156,12 +153,13 @@ public class ArinjayAuton extends LinearOpMode {
         something like strafe(<dir>,<dist>)
         dir{0,90,180,270,45,135,225,315} OR use negative angles for left
         */
+        strafe(0, 5);
 
         /*
         something like rotate(<dir>,<magnitude>)
         dir = 1 implies right, dir = -1 implies left
         rotation magnitude to go backwards the long way if necessary
          */
-
+        rotate(-1, 90);
     }
 }
