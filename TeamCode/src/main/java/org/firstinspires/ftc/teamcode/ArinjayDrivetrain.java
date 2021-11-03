@@ -17,6 +17,9 @@ public class ArinjayDrivetrain extends LinearOpMode {
     public Servo boxServo = null;
     public DcMotor liftMotor = null;
     public CRServo carouselServo = null;
+    //tick to inch for slide
+    public double ticks = Math.PI * 0.75 / 288; //pi * D / #ticks per revolution
+    public boolean box = false;
 
 //test
     public void runOpMode() {
@@ -33,10 +36,6 @@ public class ArinjayDrivetrain extends LinearOpMode {
 
 
         waitForStart();
-//.75 6 288
-        // 288 (360/360)
-        //(6/(d*Math.pi))*288
-        //set motors to controller input
         while(opModeIsActive()) {
             double d = .75;
             double horizontal = gamepad1.left_stick_x;
@@ -47,57 +46,65 @@ public class ArinjayDrivetrain extends LinearOpMode {
             backRight.setPower(-vertical + turn - horizontal);
             frontRight.setPower(vertical - turn - horizontal);
 
-            /*
-            if(gamepad1.dpad_down){
-                if(liftMotor.getCurrentPosition()>0){
-                    liftMotor.setPower(-1);
-                }
-            }
-            else if(gamepad1.dpad_left){
-                if(((7.5/(d*Math.PI))*288)>liftMotor.getCurrentPosition()){
-                    liftMotor.setPower(1);
-                }
-                else if((((6.5/(d*Math.PI))*288)<liftMotor.getCurrentPosition())){
-                    liftMotor.setPower(-1);
-                }
-            }
-            else if(gamepad1.dpad_up) {
-            if(((14/(d*Math.PI))*288)>liftMotor.getCurrentPosition()){
-                liftMotor.setPower(1);
-                }
-            }
             if (gamepad1.right_trigger > 0) {
-                intakeMotor.setPower(1);
-            }
-            else if(gamepad1.right_bumper){
                 intakeMotor.setPower(-1);
-            }
-            else{
+            } else if (gamepad1.right_bumper) {
+                intakeMotor.setPower(1);
+            } else {
                 intakeMotor.setPower(0);
             }
-
-            if (gamepad1.left_bumper) {
-                liftMotor.setPower(1);
+            if (gamepad1.x) { //top
+                slide(14);
             }
-            else if(gamepad1.left_trigger>0){
-                liftMotor.setPower(-1);
+            if (gamepad1.y) { //mid
+                slide(8);
             }
-
-            if (gamepad1.y) {
-                boxServo.setPosition(0.625);
+            if (gamepad1.b) { //bottom and turning box
+                turnServo();
             }
-            else if(gamepad1.x){
-                boxServo.setPosition(0);
+            if (gamepad1.a) { //top
+                ravel();
             }
 
-            if (gamepad1.a) {
-                carouselServo.setPower(1);
-            }
-            else if(gamepad1.b){
-                carouselServo.setPower(-1);
-            }
-            */
 
+        }
+    }
+
+    public void slide(double dist) {
+
+        liftMotor.setPower(0.3);
+        if(dist>3) {
+            liftMotor.setTargetPosition((int)(dist*ticks-3));
+            liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while(liftMotor.isBusy()) {}
+        }
+        liftMotor.setTargetPosition((int)(dist*ticks));
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(liftMotor.isBusy()) {}
+        liftMotor.setPower(0);
+    }
+    public void ravel() {
+        liftMotor.setPower(-1);
+        liftMotor.setTargetPosition(1);
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(liftMotor.isBusy()) {}
+        liftMotor.setPower(-0.3);
+        liftMotor.setTargetPosition(0);
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while(liftMotor.isBusy()) {}
+        liftMotor.setPower(0);
+
+    }
+    public void turnServo() {
+        if(!box) {
+            boxServo.setDirection(Servo.Direction.FORWARD);
+            boxServo.setPosition(0.8);
+            box = true;
+        }
+        else {
+            boxServo.setDirection(Servo.Direction.REVERSE);
+            boxServo.setPosition(0);
+            box = false;
         }
     }
 }
